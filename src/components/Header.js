@@ -1,38 +1,20 @@
 // src/components/Header.js
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-
-const HeaderWrapper = styled.header`
-  background-color: #fff;
-  padding: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-`;
-
-const Nav = styled.nav`
-  display: flex;
-  justify-content: space-around;
-`;
-
-const NavLink = styled(Link)`
-  text-decoration: none;
-  color: #333;
-  font-weight: 600;
-  font-size: 18px;
-
-  &:hover {
-    color: #ff8c00;
-  }
-`;
+import './Header.css';  // Import the CSS file
 
 const Header = () => (
-  <HeaderWrapper>
-    <Nav>
-      <NavLink to="/">Home</NavLink>
-      <NavLink to="/calendar">Calendar</NavLink>
-      <NavLink to="/profile">Profile</NavLink>
-    </Nav>
-  </HeaderWrapper>
+  <header className="header-wrapper">
+    <nav className="nav">
+      <Link className="nav-link" to="/">Home</Link>
+      <Link className="nav-link" to="/calendar">Calendar</Link>
+      <Link className="nav-link" to="/profile">Profile</Link>
+      <div className="auth-buttons">
+        <Link className="nav-button" to="/login">Login</Link>
+        <Link className="nav-button register-button" to="/register">Register</Link>
+      </div>
+    </nav>
+  </header>
 );
 
 export default Header;
