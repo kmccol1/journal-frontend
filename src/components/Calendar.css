@@ -1,0 +1,30 @@
+/* src/components/Calendar.css */
+.calendar-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.date-box {
+  padding: 20px;
+  margin: 10px;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  width: 150px;
+  text-align: center;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 5px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}

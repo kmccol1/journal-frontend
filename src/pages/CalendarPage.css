@@ -1,0 +1,10 @@
+/* src/pages/CalendarPage.css */
+.calendar-page {
+  padding: 20px;
+  text-align: center;
+}
+
+.calendar-container {
+  margin: 0 auto;
+  max-width: 600px;
+}

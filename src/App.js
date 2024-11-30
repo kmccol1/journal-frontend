@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import HomePage from './components/HomePage';
-import Calendar from './components/Calendar';
+import CalendarPage from './pages/CalendarPage';  // Import the new CalendarPage
 import Login from './components/Login';
 import Register from './components/Register';
 import Profile from './components/Profile';   // Import the Profile component
@@ -25,7 +25,7 @@ const App = () => (
     <Header />
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/calendar" element={<PrivateRoute element={<Calendar />} />} />
+      <Route path="/calendar" element={<PrivateRoute element={<CalendarPage />} />} /> {/* Calendar Page Route */}
       <Route path="/profile" element={<PrivateRoute element={<Profile />} />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
