@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { TextField, Button, Container, Typography, Box, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -7,34 +7,75 @@ const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = React.useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  
+	useEffect(() => {
+	  const token = localStorage.getItem('token'); // Use 'token' here, not 'authToken'
+	  if (token) {
+		setIsLoggedIn(true);
+	  }
+	}, []);
+	
+	const handleRegister = (newUser) => {
+        //setUser(newUser);
+        localStorage.setItem('token', newUser.token);
+        //localStorage.setItem('username', newUser.username);
+        setIsLoggedIn(true);
+    };
+	
+	const handleLogin = async (loggedInUser) => {
+        if (loggedInUser.token)
+		{
+            localStorage.setItem('token', loggedInUser.token);
+            //localStorage.setItem('username', loggedInUser.username);
+            //setUser(loggedInUser);
+            setIsLoggedIn(true);
+        }
+    };
+	
+	const handleLogout = () => {
+        //setUser(null);
+        localStorage.removeItem('token');
+        //localStorage.removeItem('username');
+        setIsLoggedIn(false);
+    };
 
   const onSubmit = async (data) => {
-    try {
-      const response = await fetch('http://localhost:8080/api/auth/signin', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
+	  try {
+		const response = await fetch('http://localhost:8080/api/auth/signin', {
+		  method: 'POST',
+		  headers: { 'Content-Type': 'application/json' },
+		  body: JSON.stringify(data),
+		});
 
-      if (!response.ok)
-	  {
-        throw new Error('Login failed');
-      }
+		if (!response.ok) {
+		  throw new Error('Login failed');
+		}
 
-      const result = await response.json();
-      console.log(result);
+		const result = await response.json();
+		console.log("Login response: ", result); // For debugging purposes...
 
-      // Save JWT token or user info to localStorage (or context)
-      localStorage.setItem('token', result.token);
+		// Extract the token from the result
+		const { token } = result;
 
-      // Redirect to profile page after successful login
-      navigate('/profile');
-    }
-	catch (error)
-	{
-      setErrorMessage(error.message);
-    }
-  };
+		// Save the token to local storage
+		if (token)
+		{
+		  localStorage.setItem('token', token);
+		}
+		else
+		{
+		  console.error('Token missing in response: ', result);
+		  throw new Error('Token missing in response');
+		}
+
+		// Redirect to profile page after successful login
+		navigate('/profile');
+	  } catch (error) {
+		setErrorMessage(error.message);
+	  }
+	};
 
   return (
     <Container maxWidth="sm">
